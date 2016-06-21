@@ -16,6 +16,10 @@
 ;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 ;; details.
 ;;=============================================================================
+;;
+;; Chez Scheme 8 changes by mnemenaut 20160621
+;;
+;;=============================================================================
 
 ;; for debugging:
 ;;(define *object* #f)
@@ -167,21 +171,25 @@
   (lambda (proc l)
     (apply append (map proc l))))
 
-(define truncate
-  (let ((scheme-truncate truncate))
-    (lambda (n) (inexact->exact (scheme-truncate n)))))
+(define metacat-truncate
+  (lambda (n)
+    (inexact->exact (truncate n))))
+(define truncate metacat-truncate)
 
-(define ceiling
-  (let ((scheme-ceiling ceiling))
-    (lambda (n) (inexact->exact (scheme-ceiling n)))))
+(define metacat-ceiling
+  (lambda (n)
+    (inexact->exact (ceiling n))))
+(define ceiling metacat-ceiling)
 
-(define floor
-  (let ((scheme-floor floor))
-    (lambda (n) (inexact->exact (scheme-floor n)))))
+(define metacat-floor
+  (lambda (n)
+    (inexact->exact (floor n))))
+(define floor metacat-floor)
 
-(define round
-  (let ((scheme-round round))
-    (lambda (n) (inexact->exact (scheme-round n)))))
+(define metacat-round
+  (lambda (n)
+    (inexact->exact (round n))))
+(define round metacat-round)
 
 (define round-to-10ths
   (lambda (n)

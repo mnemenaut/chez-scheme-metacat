@@ -16,6 +16,10 @@
 ;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 ;; details.
 ;;=============================================================================
+;;
+;; Chez Scheme 8 changes by mnemenaut 20160621
+;;
+;;=============================================================================
 
 
 (define make-letter
@@ -65,7 +69,7 @@
 
 (define make-workspace-object
   (lambda (string left-string-pos right-string-pos)
-    (let ((id# 0)
+    (let ((id-number 0)
 	  (raw-importance 0)
 	  (relative-importance 0)
 	  (intra-string-unhappiness 0)
@@ -112,8 +116,8 @@
 		    (1 "proposed")
 		    (2 "evaluated"))))
 	      (newline))
-	    (get-id# () id#)
-	    (set-id# (new-id) (set! id# new-id) 'done)
+	    (get-id-number () id-number)
+	    (set-id-number (new-id) (set! id-number new-id) 'done)
 	    (get-graphics-x1 () graphics-x1)
 	    (get-graphics-y1 () graphics-y1)
 	    (get-graphics-x2 () graphics-x2)

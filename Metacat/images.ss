@@ -16,6 +16,10 @@
 ;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 ;; details.
 ;;=============================================================================
+;;
+;; Chez Scheme 8 changes by mnemenaut 20160621
+;;
+;;=============================================================================
 
 ;; Images are part of the machinery of rule application.  Each letter or group
 ;; in a string, as well as the string itself, has an "image" that represents
@@ -281,7 +285,7 @@
 		 (set! start-letter (tell start-letter 'get-related-node arg)))
 		((platonic-letter? arg)
 		 (let ((new-letters
-			 (enumerate arg letter-relation (length sub-images) fail)))
+			 (enumerate-letters arg letter-relation (length sub-images) fail)))
 		   (tell self 'replace-all 'new-start-letter new-letters fail)
 		   (set! start-letter arg))))
 	      'done)
@@ -377,7 +381,7 @@
 		    (platonic-number->number current-length)))))))
 
 
-(define enumerate
+(define enumerate-letters
   (lambda (start relation n fail)
     (if (and (> n 1) (not (exists? relation)))
 	(fail)

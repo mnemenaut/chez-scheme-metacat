@@ -16,6 +16,10 @@
 ;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 ;; details.
 ;;=============================================================================
+;;
+;; Chez Scheme 8 changes by mnemenaut 20160621
+;;
+;;=============================================================================
 
 (define *initial-string* #f)
 (define *modified-string* #f)
@@ -220,7 +224,7 @@
 		      (map vector->list (vector->list proposed-bottom-bridge-table))
 		      '())))))
 	    (get-proposed-vertical-bridges (object)
-              (let ((id (tell object 'get-id#))
+              (let ((id (tell object 'get-id-number))
 		    (string (tell object 'get-string)))
 		(cond
 		  ((eq? string initial-string)
@@ -229,7 +233,7 @@
 		   (apply append (get-column proposed-vertical-bridge-table id)))
 		  (else '()))))
 	    (get-proposed-horizontal-bridges (object)
-              (let ((id (tell object 'get-id#))
+              (let ((id (tell object 'get-id-number))
 		    (string (tell object 'get-string)))
 		(cond
 		  ((eq? string initial-string)
@@ -242,8 +246,8 @@
 		   (apply append (get-column proposed-bottom-bridge-table id)))
 		  (else '()))))
 	    (get-all-other-coincident-bridges (bridge object1 object2)
-              (let* ((i (tell object1 'get-id#))
-		     (j (tell object2 'get-id#))
+              (let* ((i (tell object1 'get-id-number))
+		     (j (tell object2 'get-id-number))
 		     (proposed-bridges
 		       (remq bridge
 			 (case (tell bridge 'get-bridge-type)
@@ -316,7 +320,7 @@
 	    (get-spanning-bridge (bridge-type)
 	      (select-meth (tell self 'get-bridges bridge-type) 'spanning-bridge?))
 	    (add-bridge (bridge)
-	      (let ((i (tell (tell bridge 'get-object1) 'get-id#)))
+	      (let ((i (tell (tell bridge 'get-object1) 'get-id-number)))
 		(case (tell bridge 'get-bridge-type)
 		  (top
 		    (vector-set! top-bridges i bridge)
@@ -333,13 +337,13 @@
 			      (top proposed-top-bridge-table)
 			      (bottom proposed-bottom-bridge-table)
 			      (vertical proposed-vertical-bridge-table)))
-		     (i (tell (tell proposed-bridge 'get-object1) 'get-id#))
-		     (j (tell (tell proposed-bridge 'get-object2) 'get-id#))
+		     (i (tell (tell proposed-bridge 'get-object1) 'get-id-number))
+		     (j (tell (tell proposed-bridge 'get-object2) 'get-id-number))
 		     (bridge-list (table-ref table i j)))
 		(table-set! table i j (cons proposed-bridge bridge-list)))
 	      'done)
 	    (delete-bridge (bridge)
-	      (let ((i (tell (tell bridge 'get-object1) 'get-id#)))
+	      (let ((i (tell (tell bridge 'get-object1) 'get-id-number)))
 		(case (tell bridge 'get-bridge-type)
 		  (top
 		    (set! top-bridge-list (remq bridge top-bridge-list))
@@ -356,13 +360,13 @@
 			      (top proposed-top-bridge-table)
 			      (bottom proposed-bottom-bridge-table)
 			      (vertical proposed-vertical-bridge-table)))
-		     (i (tell (tell proposed-bridge 'get-object1) 'get-id#))
-		     (j (tell (tell proposed-bridge 'get-object2) 'get-id#))
+		     (i (tell (tell proposed-bridge 'get-object1) 'get-id-number))
+		     (j (tell (tell proposed-bridge 'get-object2) 'get-id-number))
 		     (bridge-list (table-ref table i j)))
 		(table-set! table i j (remq proposed-bridge bridge-list)))
 	      'done)
 	    (delete-proposed-vertical-bridges (object)
-	      (let ((id (tell object 'get-id#))
+	      (let ((id (tell object 'get-id-number))
 		    (string (tell object 'get-string)))
 		(cond
 		  ((eq? string initial-string)
@@ -371,7 +375,7 @@
 		   (initialize-column! proposed-vertical-bridge-table id '()))))
 	      'done)
 	    (delete-proposed-horizontal-bridges (object)
-              (let ((id (tell object 'get-id#))
+              (let ((id (tell object 'get-id-number))
 		    (string (tell object 'get-string)))
 		(cond
 		  ((eq? string initial-string)

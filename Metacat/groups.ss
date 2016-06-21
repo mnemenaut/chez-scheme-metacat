@@ -16,6 +16,10 @@
 ;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 ;; details.
 ;;=============================================================================
+;;
+;; Chez Scheme 8 changes by mnemenaut 20160621
+;;
+;;=============================================================================
 
 (define make-group
   (lambda (string group-category group-bond-facet direction
@@ -340,7 +344,7 @@
 		  ;; This is necessary to ensure that all bridges to this flipped
 		  ;; group will be stored in the same place in the workspace's
 		  ;; proposed-bridges-table as bridges to the unflipped version:
-		  (tell flipped-group 'set-id# (tell self 'get-id#))
+		  (tell flipped-group 'set-id-number (tell self 'get-id-number))
 		  (if* (tell self 'description-type-present? plato-length)
 		    (attach-length-description flipped-group))
 		  flipped-group)))
